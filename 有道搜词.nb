@@ -1,0 +1,555 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     23240,        547]
+NotebookOptionsPosition[     22787,        528]
+NotebookOutlinePosition[     23225,        545]
+CellTagsIndexPosition[     23182,        542]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"1.", " ", 
+      RowBox[{"youdao", "[", "kw_", "]"}]}], ":", 
+     "\:8f93\:5165\:5173\:952e\:8bcd"}], "\:ff0c", 
+    "\:8f93\:51fa\:6709\:9053\:9875\:9762"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"youdao", "[", "kw_", "]"}], ":=", 
+    RowBox[{"Import", "[", 
+     RowBox[{
+      RowBox[{
+      "\"\<http://www.youdao.com/w/\>\"", "<>", "kw", "<>", 
+       "\"\</#keyfrom=dict2.top\>\""}], ",", "\"\<XMLObject\>\""}], "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "2.", " ", 
+     "\:4e00\:4e2a\:7701\:7565Infinity\:7684\:6a21\:5f0f\:5339\:914d\:51fd\
+\:6570"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"cases", "[", 
+     RowBox[{"data_", ",", "xmlRule_"}], "]"}], ":=", 
+    RowBox[{"Cases", "[", 
+     RowBox[{"data", ",", "xmlRule", ",", "Infinity"}], "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"3.", " ", 
+       RowBox[{"definations", "[", "kw_", "]"}]}], ":", 
+      "\:8f93\:5165\:5173\:952e\:8bcd"}], "\:ff0c", 
+     RowBox[{"\:7ed9\:51fa", 
+      RowBox[{"\:3010", "\:62fc\:5199", "\:3011"}], 
+      RowBox[{"\:3010", "\:53d1\:97f3", "\:3011"}], 
+      RowBox[{"\:3010", "\:96be\:5ea6", "\:3011"}], 
+      RowBox[{"\:3010", "\:5b9a\:4e49", "\:3011"}], 
+      RowBox[{"\:3010", "\:4e3e\:4f8b", "\:3011"}], 
+      RowBox[{"\:3010", "\:6bd4\:8f83", "\:3011"}]}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"definations", "[", "kw_", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"yd", "=", 
+        RowBox[{"youdao", "[", "kw", "]"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"spell", "=", 
+        RowBox[{"StringTrim", "/@", 
+         RowBox[{"cases", "[", 
+          RowBox[{"yd", ",", 
+           RowBox[{
+            RowBox[{"XMLElement", "[", 
+             RowBox[{"\"\<em\>\"", ",", 
+              RowBox[{"{", 
+               RowBox[{
+               "\"\<class\>\"", "\[Rule]", 
+                "\"\<additional spell phonetic\>\""}], "}"}], ",", 
+              RowBox[{"{", "x_", "}"}]}], "]"}], "\[Rule]", "x"}]}], 
+          "]"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"difficulty", "=", 
+        RowBox[{"StringTrim", "/@", 
+         RowBox[{"cases", "[", 
+          RowBox[{"yd", ",", 
+           RowBox[{
+            RowBox[{"XMLElement", "[", 
+             RowBox[{"\"\<span\>\"", ",", 
+              RowBox[{"{", 
+               RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<via rank\>\""}], 
+               "}"}], ",", 
+              RowBox[{"{", "x_", "}"}]}], "]"}], "\[Rule]", "x"}]}], 
+          "]"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"defines", "=", 
+        RowBox[{"StringTrim", "/@", 
+         RowBox[{"Cases", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"cases", "[", 
+             RowBox[{"yd", ",", 
+              RowBox[{
+               RowBox[{"XMLElement", "[", 
+                RowBox[{"\"\<div\>\"", ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "\"\<class\>\"", "\[Rule]", "\"\<trans-container\>\""}], 
+                  "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"___", ",", 
+                   RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<ul\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", "x_"}], "]"}], ",", "___"}], 
+                  "}"}]}], "]"}], "\[Rule]", "x"}]}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"XMLElement", "[", 
+             RowBox[{"\"\<li\>\"", ",", 
+              RowBox[{"{", "}"}], ",", 
+              RowBox[{"{", "y_", "}"}]}], "]"}], "\[Rule]", "y"}], ",", 
+           "Infinity"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"examples", "=", 
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"temp", "=", 
+             RowBox[{"(", 
+              RowBox[{"Cases", "[", 
+               RowBox[{"yd", ",", 
+                RowBox[{
+                 RowBox[{"XMLElement", "[", 
+                  RowBox[{"\"\<div\>\"", ",", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<examples\>\""}], 
+                    "}"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "x_", "}"}]}], "]"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "y_", "}"}]}], "]"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}]}], "}"}]}], "]"}], 
+                 "\[Rule]", 
+                 RowBox[{"{", 
+                  RowBox[{"x", ",", "y"}], "}"}]}], ",", "Infinity"}], "]"}], 
+              ")"}]}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"temp2", "=", 
+             RowBox[{"Cases", "[", 
+              RowBox[{"yd", ",", 
+               RowBox[{
+                RowBox[{"XMLElement", "[", 
+                 RowBox[{"\"\<div\>\"", ",", 
+                  RowBox[{"{", 
+                   RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<examples\>\""}], 
+                   "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"___", ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", "x_", "}"}]}], "]"}], ",", "___", ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", "y_", "}"}]}], "]"}], ",", "___"}], "}"}]}], 
+                 "]"}], "\[Rule]", 
+                RowBox[{"{", 
+                 RowBox[{"x", ",", "y"}], "}"}]}], ",", "Infinity"}], "]"}]}],
+             ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"temp101", "=", 
+             RowBox[{"cases", "[", 
+              RowBox[{"yd", ",", 
+               RowBox[{
+                RowBox[{"XMLElement", "[", 
+                 RowBox[{"\"\<div\>\"", ",", 
+                  RowBox[{"{", 
+                   RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<examples\>\""}], 
+                   "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], "}"}]}], "]"}], 
+                    "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "x_", "}"}]}], "]"}], "}"}]}], "]"}], 
+                    "}"}]}], "]"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], "}"}]}], "]"}], 
+                    "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "y_", "}"}]}], "]"}], "}"}]}], "]"}], 
+                    "}"}]}], "]"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<additional\>\""}], "}"}],
+                     ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], "}"}]}], "]"}], 
+                    "}"}]}], "]"}]}], "}"}]}], "]"}], "\[Rule]", 
+                RowBox[{"{", 
+                 RowBox[{"x", ",", "y"}], "}"}]}]}], "]"}]}], ",", 
+            "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"temp201", "=", 
+             RowBox[{"Cases", "[", 
+              RowBox[{"yd", ",", 
+               RowBox[{
+                RowBox[{"XMLElement", "[", 
+                 RowBox[{"\"\<div\>\"", ",", 
+                  RowBox[{"{", 
+                   RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<examples\>\""}], 
+                   "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<pos\>\""}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<pos\>\""}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "x_", "}"}]}], "]"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<pos\>\""}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<p\>\"", ",", 
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<pos\>\""}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "y_", "}"}]}], "]"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<pos\>\""}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "___", "}"}]}], "]"}]}], "}"}]}], "]"}], 
+                "\[Rule]", 
+                RowBox[{"{", 
+                 RowBox[{"x", ",", "y"}], "}"}]}], ",", "Infinity"}], 
+              "]"}]}]}], "\[IndentingNewLine]", "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"temp", "\[NotEqual]", " ", 
+             RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"cases", "[", 
+                RowBox[{"temp", ",", 
+                 RowBox[{"XMLElement", "[", "___", "]"}]}], "]"}], 
+               "\[NotEqual]", 
+               RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{"StringTrim", "/@", "temp101"}], "\[IndentingNewLine]", 
+              ",", "\[IndentingNewLine]", 
+              RowBox[{"StringTrim", "/@", "temp"}]}], "\[IndentingNewLine]", 
+             "]"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"cases", "[", 
+                RowBox[{"temp2", ",", 
+                 RowBox[{"XMLElement", "[", "___", "]"}]}], "]"}], 
+               "\[NotEqual]", " ", 
+               RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{"StringTrim", "/@", "temp201"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"StringTrim", "/@", "temp2"}]}], "]"}]}], "]"}]}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"compares", "=", 
+        RowBox[{"StringTrim", "/@", 
+         RowBox[{"cases", "[", 
+          RowBox[{"yd", ",", 
+           RowBox[{
+            RowBox[{"XMLElement", "[", 
+             RowBox[{"\"\<div\>\"", ",", 
+              RowBox[{"{", 
+               RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<wordGroup\>\""}], 
+               "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"___", ",", 
+                RowBox[{"XMLElement", "[", 
+                 RowBox[{"\"\<p\>\"", ",", 
+                  RowBox[{"{", "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"___", ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<span\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<class\>\"", "\[Rule]", "\"\<contentTitle\>\""}], 
+                    "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"___", ",", 
+                    RowBox[{"XMLElement", "[", 
+                    RowBox[{"\"\<a\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"\"\<shape\>\"", "\[Rule]", "\"\<rect\>\""}], ",", 
+                    RowBox[{"\"\<class\>\"", "\[Rule]", "\"\<search-js\>\""}],
+                     ",", "___"}], "}"}], ",", 
+                    RowBox[{"{", "x_", "}"}]}], "]"}], ",", "___"}], "}"}]}], 
+                    "]"}], ",", "y_"}], "}"}]}], "]"}], ",", "___"}], "}"}]}],
+              "]"}], "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", "y"}], "}"}]}]}], "]"}]}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{
+        "kw", ",", "spell", ",", "difficulty", ",", "defines", ",", 
+         "examples", ",", "compares"}], "}"}]}]}], "\[IndentingNewLine]", 
+     "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"4.", " ", 
+       RowBox[{"dictTable", "[", "words_", "]"}]}], ":", 
+      "\:8f93\:5165\:8bcd\:8868"}], "\:ff0c", 
+     "\:8f93\:51fa\:91ca\:4e49table\:7684html"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"dictTable", "[", "words_", "]"}], ":=", 
+    RowBox[{"ExportString", "[", 
+     RowBox[{
+      RowBox[{"TableForm", "[", 
+       RowBox[{"(", 
+        RowBox[{"definations", "/@", "words"}], ")"}], "]"}], ",", 
+      "\"\<HTML\>\""}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.703042076062908*^9, 3.703042113733974*^9}, {
+   3.703042151153359*^9, 3.703042163239668*^9}, {3.703044287427758*^9, 
+   3.7030443425495234`*^9}, 3.7030443819740753`*^9, {3.703044428298362*^9, 
+   3.703044643694968*^9}, {3.703044679618679*^9, 3.703044883153763*^9}, {
+   3.7030489741150827`*^9, 3.703049083502513*^9}, {3.703068066984177*^9, 
+   3.7030681347059937`*^9}, {3.703068275954715*^9, 3.703068328879348*^9}, {
+   3.7030779117874603`*^9, 3.7030779129833393`*^9}, {3.703078290775416*^9, 
+   3.703078317664989*^9}, {3.7030783701628*^9, 3.703078431400639*^9}, {
+   3.7030784824332848`*^9, 3.703078546958645*^9}, 3.7030786115202293`*^9, {
+   3.703078879913786*^9, 3.703078907801107*^9}, {3.703125090446669*^9, 
+   3.703125092413859*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<~/Desktop/html.html\>\"", ",", 
+   RowBox[{"ExportString", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"definations", "[", "\"\<alternate\>\"", "]"}], "}"}], "//", 
+      "TableForm"}], ",", " ", "\"\<HTML\>\""}], "]"}], ",", "\"\<Text\>\""}],
+   "]"}]], "Input",
+ CellChangeTimes->{{3.703049615883677*^9, 3.703049639347653*^9}, 
+   3.7030496716609077`*^9, {3.703049740083249*^9, 3.7030497647500668`*^9}, {
+   3.703049837906066*^9, 3.703049846341837*^9}, {3.703049928802431*^9, 
+   3.703049949169816*^9}, {3.70305005583735*^9, 3.703050108685862*^9}, {
+   3.703050222258257*^9, 3.703050272166543*^9}, {3.7030503273440523`*^9, 
+   3.703050360566025*^9}, {3.703067647479952*^9, 3.7030676816791677`*^9}, {
+   3.703067714653948*^9, 3.7030677167782393`*^9}, {3.70306775740268*^9, 
+   3.703067760806822*^9}, {3.703067975786083*^9, 3.703067977684142*^9}, {
+   3.703123530951406*^9, 3.7031235373175497`*^9}, {3.7031251097944517`*^9, 
+   3.7031251120802*^9}}],
+
+Cell[BoxData["\<\"~/Desktop/html.html\"\>"], "Output",
+ CellChangeTimes->{
+  3.703050286539735*^9, {3.703050343039885*^9, 3.703050372392355*^9}, 
+   3.703067695484398*^9, 3.703067728567309*^9, 3.703067773638584*^9, 
+   3.703067991443098*^9, 3.703068419906351*^9, 3.7031235581594763`*^9, {
+   3.703125122489543*^9, 3.703125135832676*^9}}]
+}, Open  ]]
+},
+WindowSize->{808, 702},
+WindowMargins->{{280, Automatic}, {35, Automatic}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (2016\:5e7410\
+\:67088\:65e5)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 20821, 475, 2602, "Input"],
+Cell[CellGroupData[{
+Cell[21404, 499, 1027, 19, 91, "Input"],
+Cell[22434, 520, 337, 5, 41, "Output"]
+}, Open  ]]
+}
+]
+*)
+
